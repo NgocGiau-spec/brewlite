@@ -56,41 +56,99 @@ Theo mô hình ngữ cảnh, hệ thống **BrewLite** (`Next.js Web/PWA` + `Nes
 
 ---
 
-## 3. Phạm vi sản phẩm (Product Scope)
+## 3. Phạm vi sản phẩm
 
-| Phân vùng phạm vi | Nhóm hạng mục | Nội dung chi tiết |
-|---|---|---|
-| **TRONG PHẠM VI**<br>*(In-scope — MVP cốt lõi Sprint 1 & 2)* | Khách hàng (`CUSTOMER_APP`) | Xem thực đơn, tìm kiếm/lọc theo danh mục, xem chi tiết món; chọn `Size`, `Topping`, số lượng; quản lý giỏ hàng (tự động gộp giỏ local sau đăng nhập); đăng ký email + mật khẩu `bcrypt` xác minh qua **Gmail OTP**; đăng nhập/đăng xuất với **JWT HttpOnly Cookie & Refresh Session**; áp dụng tối đa 01 mã khuyến mãi hợp lệ và điểm thưởng (`Loyalty`, tự động giới hạn điểm giữ mức thanh toán tối thiểu `10.000 VND`); tạo đơn `PENDING` giữ chỗ tồn kho trong 10 phút; thanh toán **Ví/Thẻ mô phỏng** (`WALLET`/`CARD`), hỗ trợ thử lại khi `PAYMENT_FAILED` hoặc đối soát khi `UNKNOWN`; hủy đơn (kèm hoàn tiền mô phỏng nếu đơn `PAID` chưa sang `PREPARING`); xem xác nhận đơn, thông báo in-app, theo dõi trạng thái và lịch sử đơn/điểm thưởng. |
-| | Nhân viên (`STAFF`) & Quản trị viên (`ADMIN`) | **STAFF:** Gom món trên giỏ POS tạm tại quầy, mở/đóng ca thu ngân (`CashShift`), tạo đơn bán tại quầy (`COUNTER_POS` thu tiền mặt `CASH`/QR) và hoàn tiền quầy trước pha chế; duyệt hàng đợi đơn đã thanh toán theo thứ tự `PAID → PREPARING → READY → COMPLETED`.<br>**ADMIN:** CRUD danh mục, sản phẩm, `Topping`, phân bổ tồn kho theo `Size`; quản lý mã khuyến mãi (`1–100%` hoặc số tiền cố định); khóa/mở tài khoản & gán quyền (`CUSTOMER ↔ STAFF`, tự thu hồi phiên); đối soát ca thu ngân (`RECONCILED`), giám sát đơn hàng và xem thống kê doanh thu/trạng thái đơn/top món bán chạy. |
-| | Hạ tầng và quy trình công nghệ phần mềm | Monorepo gồm `apps/web` (`Next.js` mobile-first/PWA) và `apps/api` (`NestJS` + `Prisma` + `PostgreSQL`); Unit, Integration và E2E test; `docker-compose.yml` chạy local; GitHub Actions **CI** (chặn merge PR lỗi) và **CD** (build image đẩy lên **GHCR**, deploy lên **AWS EC2** sau **Caddy HTTPS**, chạy migration an toàn, `/api/health`, smoke test và cơ chế rollback). |
-| **PHẠM VI MỞ RỘNG**<br>*(Extended Scope)* | Tính năng tích hợp mở rộng / Tương lai | Cổng **VNPay Sandbox** (đã tích hợp sẵn dưới dạng tính năng mở rộng bật qua cờ cấu hình, yêu cầu tối thiểu `10.000 VND`); định hướng tương lai sau đồ án: quản lý chuỗi đa chi nhánh, thông báo đẩy Web Push/SMS, gợi ý đồ uống cá nhân hóa, quản lý định mức công thức nguyên vật liệu và hóa đơn điện tử. |
-| **NGOÀI PHẠM VI**<br>*(Out-of-scope)* | Các nội dung loại trừ khỏi Assignment 2 | **1.** Giao hàng tận nơi (Delivery), tính phí vận chuyển và định vị tài xế.<br>**2.** Thu tiền thật qua ngân hàng/ví điện tử thương mại hoặc thu thập, lưu trữ thông tin thẻ thật (`PAN`, `CVV`).<br>**3.** Hoàn tiền tự động qua cổng thanh toán bên ngoài (VNPay).<br>**4.** Hệ thống kế toán/ERP, quản lý kho nguyên vật liệu thô và dịch vụ SMS OTP thương mại.<br>**5.** Cam kết SLA thương mại 24/7 (môi trường triển khai là *production demo* phục vụ nghiệm thu môn học). |
+### 3.1. Phạm vi sản phẩm MVP
+Phạm vi MVP của BrewLite bao gồm các chức năng cần thiết để thực hiện đầy đủ quy trình đặt đồ uống tại một cửa hàng, từ lựa chọn sản phẩm đến thanh toán và nhận đồ uống.
+
+**a) Chức năng dành cho khách hàng**
+- Xem menu, tìm kiếm, lọc sản phẩm và xem thông tin chi tiết đồ uống.
+- Chọn kích thước (`Size`), `Topping` và số lượng sản phẩm.
+- Thêm, cập nhật hoặc xóa sản phẩm trong giỏ hàng.
+- Đăng ký tài khoản bằng email và mật khẩu, xác minh email thông qua mã OTP được gửi bằng Gmail.
+- Đăng nhập, đăng xuất và duy trì phiên làm việc bằng cơ chế JWT access token và refresh token.
+- Xác nhận mua hàng, áp dụng mã giảm giá và điểm thưởng hợp lệ.
+- Tạo đơn hàng, thanh toán bằng ví hoặc thẻ mô phỏng; xử lý trường hợp thanh toán thành công, thất bại hoặc chưa xác định được kết quả; hỗ trợ hủy đơn trước khi pha chế.
+- Theo dõi trạng thái đơn hàng và xem lịch sử đặt hàng.
+
+**b) Chức năng dành cho nhân viên**
+- Đăng nhập theo quyền `STAFF`.
+- Xem danh sách các đơn hàng đã thanh toán và chi tiết đồ uống.
+- Cập nhật trạng thái đơn hàng theo trình tự: `PAID → PREPARING → READY → COMPLETED`.
+- Tạo và thu tiền đơn tại quầy (tiền mặt hoặc chuyển khoản QR, không áp dụng mã giảm giá và điểm thưởng), mở/đóng ca thu ngân, hoàn tiền đơn quầy trước khi pha chế và tra cứu lịch sử đơn trong ngày.
+- Ghi nhận lịch sử thay đổi trạng thái để phục vụ theo dõi và kiểm tra.
+
+**c) Chức năng dành cho chủ cửa hàng**
+- Quản lý danh mục sản phẩm, kích thước, topping và giá bán.
+- Quản lý tình trạng khả dụng và tồn kho theo từng kích thước sản phẩm (SKU).
+- Tạo, cập nhật và vô hiệu hóa các chương trình khuyến mãi.
+- Quản lý tài khoản người dùng và phân quyền truy cập (tự động thu hồi phiên đăng nhập khi đổi vai trò hoặc vô hiệu hóa tài khoản).
+- Giám sát thông tin đơn hàng (chỉ đọc), đối soát quỹ tiền mặt cuối ca và xem báo cáo thống kê (doanh thu theo kênh, tỷ lệ trạng thái đơn và top món bán chạy).
+
+**d) Phạm vi kỹ thuật**
+Hệ thống được xây dựng theo kiến trúc ứng dụng web, sử dụng các công nghệ sau:
+- **Next.js:** Phát triển giao diện frontend theo hướng mobile-first và Progressive Web App (PWA).
+- **NestJS:** Xây dựng backend API, xử lý nghiệp vụ và xác thực, phân quyền người dùng.
+- **PostgreSQL:** Quản lý dữ liệu sản phẩm, người dùng, giỏ hàng, đơn hàng, giao dịch thanh toán và điểm thưởng.
+- **Docker Compose:** Đóng gói và vận hành các dịch vụ trong môi trường phát triển.
+- **Git và GitHub:** Quản lý mã nguồn, tài liệu, lịch sử thay đổi và phối hợp phát triển.
+- **CI/CD:** Tự động hóa kiểm tra chất lượng mã nguồn, xây dựng và triển khai ứng dụng.
+
+Hệ thống được triển khai trên môi trường production demo có HTTPS, hỗ trợ kiểm tra trạng thái dịch vụ và phục vụ nghiệm thu theo yêu cầu Assignment 2.
+
+### 3.2. Phạm vi mở rộng và ngoài phạm vi
+
+**a) Phạm vi mở rộng**
+Các chức năng mở rộng hoặc có thể được phát triển trong những phiên bản tiếp theo bao gồm:
+- Tích hợp cổng thanh toán trực tuyến VNPay Sandbox thử nghiệm.
+- Phân tích và báo cáo doanh thu nâng cao.
+- Thông báo đẩy về trạng thái đơn hàng.
+- Quản lý nhiều cửa hàng hoặc nhiều chi nhánh.
+- Gợi ý đồ uống dựa trên hành vi và sở thích khách hàng.
+- Quản lý định mức nguyên vật liệu và tích hợp thiết bị bán hàng.
+- Tích hợp hóa đơn điện tử và các chức năng quản trị mở rộng.
+
+**b) Ngoài phạm vi**
+Các chức năng sau không thuộc phạm vi triển khai của Assignment 2:
+- Thanh toán bằng tiền thật hoặc tích hợp cổng ngân hàng, ví điện tử đang hoạt động thực tế.
+- Thu thập hoặc lưu trữ thông tin thẻ thanh toán như số thẻ và CVV.
+- Hoàn tiền tự động qua cổng thanh toán bên ngoài.
+- Giao hàng tận nơi và theo dõi vị trí nhân viên giao hàng.
+- Quản lý nhiều chi nhánh trong phiên bản MVP.
+- Hệ thống kế toán, ERP và quản lý nguyên vật liệu chuyên sâu.
+- Gửi SMS OTP thật và cung cấp dịch vụ thương mại với cam kết hoạt động liên tục 24/7.
 
 ---
 
 ## 4. Giả định và Ràng buộc
 
-### 4.1. Bảng giả định 
+Các giả định được sử dụng làm cơ sở để xác định phạm vi nghiệp vụ. Ràng buộc là những điều kiện mà hệ thống phải tuân thủ trong quá trình thiết kế và triển khai.
 
-| Mã | Nội dung giả định | Hệ quả nếu giả định thay đổi |
-|---|---|---|
-| AS-01 | Hệ thống phục vụ duy nhất 01 cửa hàng vật lý; toàn bộ đơn hàng đều nhận trực tiếp tại quầy. | Cần bổ sung nghiệp vụ chọn chi nhánh, địa chỉ giao hàng và tính phí vận chuyển. |
-| AS-02 | Khách vãng lai được xem thực đơn và thao tác giỏ hàng tạm, nhưng bắt buộc đăng nhập tài khoản `CUSTOMER` đã xác minh email trước khi đặt đơn. | Cần thay đổi luồng xác thực tại bước Checkout và cơ chế định danh chủ sở hữu đơn. |
-| AS-03 | Mỗi kích thước sản phẩm (`Size.id`) đóng vai trò là một đơn vị tồn kho (SKU) độc lập gồm `onHand` và `reserved`; `Size` có `onHand = NULL` được hiểu là chưa phân bổ tồn kho và chưa mở bán. | Cần thiết kế lại mô hình kiểm kê kho nếu tính tồn theo công thức nguyên liệu pha chế. |
-| AS-04 | Dữ liệu giá bán và tồn kho trên Backend là nguồn chuẩn duy nhất; mỗi đơn hàng lưu lại bản chụp giá (`unitPrice`, `lineTotal`) và tên tùy chọn tại thời điểm tạo đơn. | Thay đổi giá trên menu có thể làm sai lệch lịch sử tổng tiền các đơn hàng cũ. |
-| AS-05 | Luồng nghiệm thu chính sử dụng **Ví/Thẻ mô phỏng** (`ENABLE_MOCK_PAYMENTS=true`) cho phép cấu hình kết quả `SUCCESS`, `FAILED`, `UNKNOWN` từ phía server mà không thu tiền thật. | Phụ thuộc vào tài khoản sandbox bên thứ ba khi chạy kiểm thử tự động E2E/CI. |
-| AS-06 | Mỗi đơn đặt qua ứng dụng khách hàng được áp dụng tối đa 01 mã khuyến mãi hợp lệ (theo hạn mức `maxDiscount` riêng của mã) kết hợp quy đổi điểm thưởng (`1 điểm = 100 VND`); hệ thống tự động giới hạn số điểm tối đa sử dụng (`maxRedeemablePoints`) để giữ mức thanh toán tối thiểu `10.000 VND`. Đơn POS tại quầy không áp dụng mã giảm giá/điểm thưởng. | Thay đổi công thức tính `finalTotal`, `maxRedeemablePoints` và điều kiện thanh toán qua cổng ngoài. |
-| AS-07 | Đơn hàng ở trạng thái `PAID` chỉ được phép hủy và hoàn tiền mô phỏng (`Refund`) khi nhân viên **chưa** chuyển đơn sang trạng thái `PREPARING`. | Phát sinh quy trình xử lý hủy món đang pha chế và khấu hao nguyên liệu. |
+### 4.1. Giả định
 
-### 4.2. Bảng ràng buộc
+| ID | Giả định |
+|---|---|
+| AS-01 | BrewLite phục vụ một cửa hàng, khách hàng nhận đồ uống tại quầy. |
+| AS-02 | Khách vãng lai được xem menu và tạo giỏ hàng nhưng phải đăng nhập trước khi đặt và thanh toán đơn. |
+| AS-03 | Cổng thanh toán nghiệm thu chính hoạt động ở chế độ mô phỏng, hỗ trợ kết quả thành công, thất bại và truy vấn trạng thái giao dịch. |
+| AS-04 | Mỗi kích thước sản phẩm được quản lý như một SKU thông qua `Size.id`; tồn kho chưa phân bổ không được phép bán. |
+| AS-05 | Giá bán và tồn kho do backend quản lý; đơn hàng lưu giá và tùy chọn tại thời điểm đặt. |
+| AS-06 | Mỗi đơn hàng online được áp dụng tối đa một mã giảm giá kết hợp với điểm thưởng hợp lệ (`1 điểm = 100 đồng`), tự động giới hạn điểm sử dụng để giữ mức thanh toán tối thiểu `10.000 đồng`. |
+| AS-07 | Hỗ trợ hủy và hoàn tiền mô phỏng (với đơn ví/thẻ mô phỏng) hoặc hoàn tiền tại quầy khi đơn ở trạng thái `PAID` và chưa chuyển sang `PREPARING`; không hỗ trợ hoàn tiền tự động đối với giao dịch VNPay trực tuyến. |
+| AS-08 | Môi trường production demo sử dụng dữ liệu thử nghiệm, không sử dụng dữ liệu thanh toán nhạy cảm thật. |
 
-| Mã | Loại ràng buộc | Mô tả ràng buộc | Cơ sở tham chiếu |
-|---|---|---|---|
-| CO-01 | Công nghệ | Bắt buộc sử dụng **Next.js** (mobile-first/PWA) cho Frontend, **NestJS** cho Backend, **PostgreSQL** cho CSDL và đóng gói với **Docker**. | Assignment 2 §1.1 |
-| CO-02 | Quy trình | 5 task phải thực hiện tuần tự, lưu vết lịch sử commit/Pull Request rõ ràng và liên kết đầy đủ trong `docs/traceability-matrix.md`. | Assignment 2 §1, §6.2, §8 |
-| CO-03 | Nghiệp vụ & Mô hình | Đảm bảo luồng tối thiểu `Xem menu → Chọn tùy chọn → Giỏ hàng → Đặt đơn → Thanh toán → Theo dõi đơn`; sơ đồ UML phải xử lý các nhánh hết hàng, chưa đăng nhập, thanh toán thất bại, JWT, transaction và idempotency. | Assignment 2 §1.1, §4 |
-| CO-04 | Chất lượng & CI | Mọi Pull Request phải vượt qua pipeline tự động `Install → Lint → Unit Test → Build` trước khi merge; hệ thống phải có đủ Unit, Integration và E2E test. | Assignment 2 §6.4, §7.2 |
-| CO-05 | Triển khai & Bảo mật | Môi trường production phải truy cập qua **HTTPS**, có health check endpoint, database không mở public trực tiếp ra Internet, không lộ secret (`.env`, khóa bí mật) trong mã nguồn hoặc log CI/CD, có quy trình rollback khi lỗi. | Assignment 2 §7.3, §7.4 |
+### 4.2. Ràng buộc
+
+| ID | Ràng buộc |
+|---|---|
+| CO-01 | Bắt buộc sử dụng Next.js theo hướng mobile-first/PWA, NestJS và PostgreSQL. |
+| CO-02 | Đảm bảo luồng nghiệp vụ: Xem menu, chọn tùy chọn, giỏ hàng, đặt đơn, thanh toán và theo dõi đơn. |
+| CO-03 | Năm Task được thực hiện tuần tự, có lịch sử thay đổi và khả năng truy vết trên kho mã nguồn. |
+| CO-04 | Các sơ đồ UML phải thể hiện luồng nghiệp vụ chính, các trường hợp ngoại lệ, xác thực và xử lý giao dịch. |
+| CO-05 | Quy trình CI thực hiện các bước `Install`, `Lint`, `Unit Test` và `Build`; hệ thống có tối thiểu một kiểm thử End-to-End. |
+| CO-06 | Môi trường triển khai có HTTPS, health check, bảo vệ secret, cơ sở dữ liệu không public trực tiếp và hỗ trợ rollback. |
+| CO-07 | Thanh toán chỉ sử dụng cổng mô phỏng (hoặc Sandbox thử nghiệm), không thực hiện giao dịch tiền thật. |
+| CO-08 | Các chính sách nghiệp vụ được truy vết và kiểm soát thay đổi thông qua issue và pull request. |
 
 ---
 
