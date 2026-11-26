@@ -1,8 +1,8 @@
-# BrewLite — Bối cảnh, stakeholder và phạm vi hệ thống
+# BrewLite - Bối cảnh, stakeholder và phạm vi hệ thống
 
-- **Mã tài liệu:** BL-REQ-01 (Assignment 2 — Task 1.1)
+- **Mã tài liệu:** BL-REQ-01 (Assignment 2 - Task 1.1)
 - **Phiên bản:** 1.0
-- **Đối tượng đọc:** Khách hàng/Chủ cửa hàng, Giảng viên nghiệm thu, Nhóm phát triển (BA, Frontend, Backend, QA, DevOps)
+- **Đối tượng đọc:** khách hàng/chủ cửa hàng, giảng viên nghiệm thu, nhóm phát triển
 
 ---
 
@@ -31,37 +31,40 @@ Theo mô hình ngữ cảnh, hệ thống **BrewLite** (`Next.js Web/PWA` + `Nes
 
 ### 2.2. Bảng phân tích Stakeholder
 
-| Mã | Stakeholder | Phân loại | Vai trò & Mục tiêu (Why? - Role) | Kỳ vọng chính đối với hệ thống |
+| Mã | Stakeholder | Phân loại | Vai trò & Mục tiêu | Kỳ vọng chính đối với hệ thống |
 |---|---|---|---|---|
-| ST-01 | **Khách hàng** (`Guest` / `CUSTOMER`) | End user *(Primary Actor)* | Người dùng cuối tìm kiếm đồ uống, tùy chọn món, đặt hàng, thanh toán và nhận nước tại quầy. | Thực đơn trực quan trên di động, tính giá/ưu đãi chính xác, kết quả thanh toán rõ ràng, theo dõi được tiến độ đơn và lịch sử điểm thưởng. |
-| ST-02 | **Nhân viên quầy & pha chế** (`STAFF`) | End user *(Operational Actor)* | Vận hành hàng đợi pha chế, mở/đóng ca thu ngân và hỗ trợ tạo đơn trực tiếp tại quầy (POS). | Chỉ nhận đơn đã thanh toán vào hàng đợi pha chế, xem rõ cấu hình món, chuyển trạng thái đơn đúng thứ tự và quản lý thu/hoàn tiền tại quầy chính xác. |
-| ST-03 | **Quản lý / Chủ cửa hàng** (`ADMIN`) | System manager / System owner *(Admin Actor)* | Quản trị danh mục kinh doanh, tồn kho, khuyến mãi, nhân sự và giám sát doanh thu cửa hàng. | Quản lý được sản phẩm/`Size`/`Topping`/tồn kho, mã giảm giá, phân quyền tài khoản, đối soát ca thu ngân và xem thống kê vận hành. |
+| ST-01 | **Khách hàng**| End user *(Primary Actor)* | Người dùng cuối tìm kiếm đồ uống, tùy chọn món, đặt hàng, thanh toán và nhận nước tại quầy. | Thực đơn trực quan trên di động, tính giá/ưu đãi chính xác, kết quả thanh toán rõ ràng, theo dõi được tiến độ đơn và lịch sử điểm thưởng. |
+| ST-02 | **Nhân viên** | End user *(Operational Actor)* | Vận hành hàng đợi pha chế, mở/đóng ca thu ngân và hỗ trợ tạo đơn trực tiếp tại quầy (POS). | Chỉ nhận đơn đã thanh toán vào hàng đợi pha chế, xem rõ cấu hình món, chuyển trạng thái đơn đúng thứ tự và quản lý thu/hoàn tiền tại quầy chính xác. |
+| ST-03 | **Quản trị viên** | System manager *(Admin Actor)* | Quản trị danh mục kinh doanh, tồn kho, khuyến mãi, nhân sự và giám sát doanh thu cửa hàng. | Quản lý được sản phẩm/`Size`/`Topping`/tồn kho, mã giảm giá, phân quyền tài khoản, đối soát ca thu ngân và xem thống kê vận hành. |
 | ST-04 | **Giảng viên / Khách hàng nghiệm thu** | System owner *(Stakeholder nghiệm thu)* | Đánh giá quy trình kỹ nghệ phần mềm từ yêu cầu đến triển khai và nghiệm thu sản phẩm. | Thực hiện tuần tự đủ 5 Task có lịch sử Git/PR rõ ràng; SRS, UML, kiến trúc, code, test và URL production HTTPS đồng bộ theo ma trận truy vết. |
-| ST-05 | **Nhóm phát triển** (BA, FE, BE, QA, DevOps) | System developers & maintainers | Phân tích, thiết kế, hiện thực qua 2 Sprint, kiểm thử tự động và vận hành pipeline CI/CD. | Yêu cầu rõ ràng, có tiêu chí chấp nhận kiểm chứng được; kiến trúc tách lớp dễ bảo trì, tự động hóa kiểm thử và triển khai an toàn. |
+| ST-05 | **Nhóm phát triển** | System developers & maintainers | Phân tích, thiết kế, hiện thực qua 2 Sprint, kiểm thử tự động và vận hành pipeline CI/CD. | Yêu cầu rõ ràng, có tiêu chí chấp nhận kiểm chứng được; kiến trúc tách lớp dễ bảo trì, tự động hóa kiểm thử và triển khai an toàn. |
 | ST-06 | **Đơn vị thanh toán & Dịch vụ ngoài** (`Mock Payment` / `VNPay Sandbox`, `Gmail SMTP`) | External stakeholders *(Secondary Actors)* | Cung cấp dịch vụ xác nhận giao dịch thanh toán mô phỏng và gửi thư xác thực OTP. | Giao tiếp qua hợp đồng API xác định, hỗ trợ xử lý idempotent chống giao dịch trùng lặp và không thu thập dữ liệu thẻ/tiền thật. |
 
 
-### 2.3. Phân quyền vai trò người dùng trong hệ thống 
-
+### 2.3. Phân quyền vai trò người dùng trong hệ thống
 | Nhóm nghiệp vụ | Khách vãng lai (`Guest`) | Khách đăng nhập (`CUSTOMER`) | Nhân viên (`STAFF`) | Quản trị viên (`ADMIN`) |
 |---|:---:|:---:|:---:|:---:|
 | Xem thực đơn, tìm kiếm, lọc và xem chi tiết món | Có | Có | Có | Có |
-| Thêm/sửa/xóa giỏ hàng cá nhân | Có *(local)* | Có *(đồng bộ)* | Không | Không |
-| Đặt đơn online, áp mã giảm giá/điểm, thanh toán & hủy trước pha chế | Không | Có | Không | Không |
-| Tiếp nhận đơn `PAID` và cập nhật trạng thái pha chế (`PREPARING → READY → COMPLETED`) | Không | Không | Có | Không *(chỉ giám sát)* |
-| Mở/đóng ca thu ngân (`CashShift`), tạo đơn POS (`CASH`/QR) & hoàn tiền quầy | Không | Không | Có | Không *(đối soát cuối ca)* |
-| Quản lý danh mục, sản phẩm, tồn kho `Size`, `Topping`, khuyến mãi, tài khoản & thống kê | Không | Không | Không | Có |
+| Thao tác giỏ hàng trên giao diện | Có *(giỏ tạm local)* | Có *(đồng bộ PostgreSQL)* | Có *(giỏ POS tạm tại quầy, không lưu DB)* | Không *(ẩn thao tác mua)* |
+| Đặt đơn online, áp mã giảm giá/điểm, thanh toán & hủy đơn cá nhân trước pha chế | Không | Có *(đơn của chính mình)* | Không | Không |
+| Xem lịch sử đơn cá nhân, sổ điểm thưởng (`Loyalty`) & thông báo (`Notification`) | Không | Có *(của chính mình)* | Không | Không |
+| Xem hàng đợi đơn đã thanh toán & lịch sử đơn trong ngày | Không | Không | Có | Chỉ xem *(giám sát)* |
+| Cập nhật tiến độ pha chế (`PAID → PREPARING → READY → COMPLETED`) | Không | Không | Có | Không |
+| Mở/đóng ca thu ngân (`CashShift`), tạo đơn POS (`CASH`/QR) & hoàn tiền tại quầy | Không | Không | Có | Không *(chỉ xem & đối soát cuối ca)* |
+| Đối soát ca thu ngân đã đóng (`CLOSED → RECONCILED`), giám sát toàn bộ đơn & thống kê | Không | Không | Không | Có |
+| Quản lý danh mục, sản phẩm, tồn kho `Size`, `Topping`, mã khuyến mãi & khóa/gán quyền (`CUSTOMER ↔ STAFF`) | Không | Không | Không | Có *(không tự sửa/khóa `ADMIN`)* |
 
 ---
 
-## 3. Phạm vi sản phẩm 
+## 3. Phạm vi sản phẩm (Product Scope)
+
 | Phân vùng phạm vi | Nhóm hạng mục | Nội dung chi tiết |
 |---|---|---|
-| **In-scope (MVP cốt lõi — Sprint 1 & Sprint 2)** | **Khách hàng (`CUSTOMER_APP`)** | Xem thực đơn, tìm kiếm/lọc theo danh mục, xem chi tiết món; chọn `Size`, `Topping`, số lượng; quản lý giỏ hàng (tự động gộp giỏ local sau đăng nhập); đăng ký email + mật khẩu `bcrypt` xác minh qua **Gmail OTP**; đăng nhập/đăng xuất với **JWT HttpOnly Cookie & Refresh Session**; áp dụng tối đa 01 mã khuyến mãi (`Promotion`) và điểm thưởng (`Loyalty`); tạo đơn `PENDING` giữ chỗ tồn kho trong 10 phút; thanh toán **Ví/Thẻ mô phỏng** (`WALLET`/`CARD`), hỗ trợ thử lại khi `PAYMENT_FAILED` hoặc đối soát khi `UNKNOWN`; hủy đơn (kèm hoàn tiền mô phỏng nếu đơn `PAID` chưa sang `PREPARING`); xem xác nhận đơn, thông báo in-app, theo dõi trạng thái và lịch sử đơn/điểm thưởng. |
-| **In-scope (Vận hành & Quản trị cửa hàng)** | **Nhân viên (`STAFF`) & Quản lý (`ADMIN`)** | **STAFF:** Duyệt hàng đợi đơn đã thanh toán theo thứ tự `PAID → PREPARING → READY → COMPLETED`; mở/đóng ca thu ngân (`CashShift`), tạo đơn bán tại quầy (`COUNTER_POS` thu tiền mặt `CASH`/QR) và hoàn tiền tại quầy trước pha chế.<br>**ADMIN:** CRUD danh mục, sản phẩm, `Topping`, phân bổ tồn kho theo `Size`; quản lý mã khuyến mãi; quản lý người dùng & phân quyền (thu hồi phiên khi khóa/đổi quyền); đối soát ca thu ngân (`RECONCILED`), giám sát đơn hàng và xem thống kê doanh thu/trạng thái đơn/top món bán chạy. |
-| **In-scope (Kỹ thuật, Kiểm thử & Triển khai)** | **Hạ tầng & Quy trình CNPM** | Monorepo gồm `apps/web` (`Next.js` mobile-first/PWA) và `apps/api` (`NestJS` + `Prisma` + `PostgreSQL`); Unit, Integration và E2E test; `docker-compose.yml` chạy local; GitHub Actions **CI** (chặn merge PR lỗi) và **CD** (build image đẩy lên **GHCR**, deploy lên **AWS EC2** sau **Nginx HTTPS**, chạy migration an toàn, `/api/health`, smoke test và cơ chế rollback). |
-| **Phạm vi mở rộng (Extended Scope)** | **Tính năng tích hợp mở rộng / Tương lai** | Cổng **VNPay Sandbox** (đã tích hợp sẵn dưới dạng tính năng mở rộng bật qua cờ cấu hình); định hướng tương lai sau đồ án: quản lý chuỗi đa chi nhánh, thông báo đẩy Web Push/SMS, gợi ý đồ uống cá nhân hóa, quản lý định mức công thức nguyên vật liệu và hóa đơn điện tử. |
-| **Out-of-scope (Ngoài phạm vi — Không thực hiện)** | **Các nội dung loại trừ khỏi Assignment 2** | **1.** Giao hàng tận nơi (Delivery), tính phí vận chuyển và định vị tài xế.<br>**2.** Thu tiền thật qua ngân hàng/ví điện tử thương mại hoặc thu thập, lưu trữ thông tin thẻ thật (số thẻ PAN, CVV).<br>**3.** Hoàn tiền tự động qua cổng thanh toán bên ngoài (VNPay).<br>**4.** Hệ thống kế toán/ERP, quản lý kho nguyên vật liệu thô (gram cà phê, ml sữa) và dịch vụ SMS OTP thương mại.<br>**5.** Cam kết SLA thương mại 24/7 (môi trường triển khai là *production demo* phục vụ nghiệm thu môn học). |
+| **TRONG PHẠM VI**<br>*(In-scope — MVP cốt lõi Sprint 1 & 2)* | Khách hàng (`CUSTOMER_APP`) | Xem thực đơn, tìm kiếm/lọc theo danh mục, xem chi tiết món; chọn `Size`, `Topping`, số lượng; quản lý giỏ hàng (tự động gộp giỏ local sau đăng nhập); đăng ký email + mật khẩu `bcrypt` xác minh qua **Gmail OTP**; đăng nhập/đăng xuất với **JWT HttpOnly Cookie & Refresh Session**; áp dụng tối đa 01 mã khuyến mãi hợp lệ và điểm thưởng (`Loyalty`, tự động giới hạn điểm giữ mức thanh toán tối thiểu `10.000 VND`); tạo đơn `PENDING` giữ chỗ tồn kho trong 10 phút; thanh toán **Ví/Thẻ mô phỏng** (`WALLET`/`CARD`), hỗ trợ thử lại khi `PAYMENT_FAILED` hoặc đối soát khi `UNKNOWN`; hủy đơn (kèm hoàn tiền mô phỏng nếu đơn `PAID` chưa sang `PREPARING`); xem xác nhận đơn, thông báo in-app, theo dõi trạng thái và lịch sử đơn/điểm thưởng. |
+| | Nhân viên (`STAFF`) & Quản trị viên (`ADMIN`) | **STAFF:** Gom món trên giỏ POS tạm tại quầy, mở/đóng ca thu ngân (`CashShift`), tạo đơn bán tại quầy (`COUNTER_POS` thu tiền mặt `CASH`/QR) và hoàn tiền quầy trước pha chế; duyệt hàng đợi đơn đã thanh toán theo thứ tự `PAID → PREPARING → READY → COMPLETED`.<br>**ADMIN:** CRUD danh mục, sản phẩm, `Topping`, phân bổ tồn kho theo `Size`; quản lý mã khuyến mãi (`1–100%` hoặc số tiền cố định); khóa/mở tài khoản & gán quyền (`CUSTOMER ↔ STAFF`, tự thu hồi phiên); đối soát ca thu ngân (`RECONCILED`), giám sát đơn hàng và xem thống kê doanh thu/trạng thái đơn/top món bán chạy. |
+| | Hạ tầng và quy trình công nghệ phần mềm | Monorepo gồm `apps/web` (`Next.js` mobile-first/PWA) và `apps/api` (`NestJS` + `Prisma` + `PostgreSQL`); Unit, Integration và E2E test; `docker-compose.yml` chạy local; GitHub Actions **CI** (chặn merge PR lỗi) và **CD** (build image đẩy lên **GHCR**, deploy lên **AWS EC2** sau **Caddy HTTPS**, chạy migration an toàn, `/api/health`, smoke test và cơ chế rollback). |
+| **PHẠM VI MỞ RỘNG**<br>*(Extended Scope)* | Tính năng tích hợp mở rộng / Tương lai | Cổng **VNPay Sandbox** (đã tích hợp sẵn dưới dạng tính năng mở rộng bật qua cờ cấu hình, yêu cầu tối thiểu `10.000 VND`); định hướng tương lai sau đồ án: quản lý chuỗi đa chi nhánh, thông báo đẩy Web Push/SMS, gợi ý đồ uống cá nhân hóa, quản lý định mức công thức nguyên vật liệu và hóa đơn điện tử. |
+| **NGOÀI PHẠM VI**<br>*(Out-of-scope)* | Các nội dung loại trừ khỏi Assignment 2 | **1.** Giao hàng tận nơi (Delivery), tính phí vận chuyển và định vị tài xế.<br>**2.** Thu tiền thật qua ngân hàng/ví điện tử thương mại hoặc thu thập, lưu trữ thông tin thẻ thật (`PAN`, `CVV`).<br>**3.** Hoàn tiền tự động qua cổng thanh toán bên ngoài (VNPay).<br>**4.** Hệ thống kế toán/ERP, quản lý kho nguyên vật liệu thô và dịch vụ SMS OTP thương mại.<br>**5.** Cam kết SLA thương mại 24/7 (môi trường triển khai là *production demo* phục vụ nghiệm thu môn học). |
 
 ---
 
@@ -76,28 +79,30 @@ Theo mô hình ngữ cảnh, hệ thống **BrewLite** (`Next.js Web/PWA` + `Nes
 | AS-03 | Mỗi kích thước sản phẩm (`Size.id`) đóng vai trò là một đơn vị tồn kho (SKU) độc lập gồm `onHand` và `reserved`; `Size` có `onHand = NULL` được hiểu là chưa phân bổ tồn kho và chưa mở bán. | Cần thiết kế lại mô hình kiểm kê kho nếu tính tồn theo công thức nguyên liệu pha chế. |
 | AS-04 | Dữ liệu giá bán và tồn kho trên Backend là nguồn chuẩn duy nhất; mỗi đơn hàng lưu lại bản chụp giá (`unitPrice`, `lineTotal`) và tên tùy chọn tại thời điểm tạo đơn. | Thay đổi giá trên menu có thể làm sai lệch lịch sử tổng tiền các đơn hàng cũ. |
 | AS-05 | Luồng nghiệm thu chính sử dụng **Ví/Thẻ mô phỏng** (`ENABLE_MOCK_PAYMENTS=true`) cho phép cấu hình kết quả `SUCCESS`, `FAILED`, `UNKNOWN` từ phía server mà không thu tiền thật. | Phụ thuộc vào tài khoản sandbox bên thứ ba khi chạy kiểm thử tự động E2E/CI. |
-| AS-06 | Mỗi đơn đặt qua ứng dụng khách hàng được áp dụng tối đa 01 mã khuyến mãi (giảm tối đa 50% tạm tính) kết hợp quy đổi điểm thưởng hợp lệ (`1 điểm = 100 VND`, tối đa 50% số tiền sau mã giảm); đơn POS tại quầy không áp dụng mã giảm giá/điểm thưởng. | Thay đổi công thức tính `finalTotal` và quy tắc giữ chỗ ưu đãi. |
+| AS-06 | Mỗi đơn đặt qua ứng dụng khách hàng được áp dụng tối đa 01 mã khuyến mãi hợp lệ (theo hạn mức `maxDiscount` riêng của mã) kết hợp quy đổi điểm thưởng (`1 điểm = 100 VND`); hệ thống tự động giới hạn số điểm tối đa sử dụng (`maxRedeemablePoints`) để giữ mức thanh toán tối thiểu `10.000 VND`. Đơn POS tại quầy không áp dụng mã giảm giá/điểm thưởng. | Thay đổi công thức tính `finalTotal`, `maxRedeemablePoints` và điều kiện thanh toán qua cổng ngoài. |
 | AS-07 | Đơn hàng ở trạng thái `PAID` chỉ được phép hủy và hoàn tiền mô phỏng (`Refund`) khi nhân viên **chưa** chuyển đơn sang trạng thái `PREPARING`. | Phát sinh quy trình xử lý hủy món đang pha chế và khấu hao nguyên liệu. |
 
 ### 4.2. Bảng ràng buộc
 
-| Mã | Loại ràng buộc | Nội dung ràng buộc bắt buộc | Cơ sở tham chiếu |
+| Mã | Loại ràng buộc | Mô tả ràng buộc | Cơ sở tham chiếu |
 |---|---|---|---|
 | CO-01 | Công nghệ | Bắt buộc sử dụng **Next.js** (mobile-first/PWA) cho Frontend, **NestJS** cho Backend, **PostgreSQL** cho CSDL và đóng gói với **Docker**. | Assignment 2 §1.1 |
-| CO-02 | Quy trình | Năm Task (Task 1 → Task 5) phải thực hiện tuần tự, lưu vết lịch sử commit/Pull Request rõ ràng và liên kết đầy đủ trong `docs/traceability-matrix.md`. | Assignment 2 §1, §6.2, §8 |
+| CO-02 | Quy trình | 5 task phải thực hiện tuần tự, lưu vết lịch sử commit/Pull Request rõ ràng và liên kết đầy đủ trong `docs/traceability-matrix.md`. | Assignment 2 §1, §6.2, §8 |
 | CO-03 | Nghiệp vụ & Mô hình | Đảm bảo luồng tối thiểu `Xem menu → Chọn tùy chọn → Giỏ hàng → Đặt đơn → Thanh toán → Theo dõi đơn`; sơ đồ UML phải xử lý các nhánh hết hàng, chưa đăng nhập, thanh toán thất bại, JWT, transaction và idempotency. | Assignment 2 §1.1, §4 |
 | CO-04 | Chất lượng & CI | Mọi Pull Request phải vượt qua pipeline tự động `Install → Lint → Unit Test → Build` trước khi merge; hệ thống phải có đủ Unit, Integration và E2E test. | Assignment 2 §6.4, §7.2 |
-| CO-05 | Triển khai & Bảo mật | Môi trường production phải truy cập qua **HTTPS**, có health check endpoint, CSDL không mở public trực tiếp ra Internet, không lộ secret (`.env`, khóa bí mật) trong mã nguồn hoặc log CI/CD, có quy trình rollback khi lỗi. | Assignment 2 §7.3, §7.4 |
+| CO-05 | Triển khai & Bảo mật | Môi trường production phải truy cập qua **HTTPS**, có health check endpoint, database không mở public trực tiếp ra Internet, không lộ secret (`.env`, khóa bí mật) trong mã nguồn hoặc log CI/CD, có quy trình rollback khi lỗi. | Assignment 2 §7.3, §7.4 |
 
 ---
 
 ## 5. Rủi ro ban đầu và biện pháp giảm thiểu
 
-| Mã | Rủi ro nhận diện | Mức độ (Khả năng / Tác động) | Biện pháp kiểm soát trong thiết kế & triển khai |
+| Mã | Rủi ro nhận diện | Mức độ (khả năng / tác động) | Biện pháp kiểm soát trong thiết kế & triển khai |
 |---|---|---|---|
-| RK-01 | **Bán vượt tồn kho (Overselling)** khi nhiều khách hàng cùng đặt một `Size` sản phẩm sắp hết hàng tại cùng thời điểm. | Trung bình / Cao | Kiểm tra `available = onHand - reserved` và tạo bản ghi giữ chỗ (`OrderReservation`) bên trong Database Transaction nguyên tử có kiểm soát phiên bản (`version`). |
-| RK-02 | **Tạo đơn hoặc thanh toán trùng lặp** do mạng chậm khiến client gửi lại request hoặc callback lặp. | Cao / Cao | Bắt buộc sử dụng `Idempotency-Key` (lưu `IdempotencyRecord` kèm băm payload) cho thao tác tạo đơn/thanh toán/hủy đơn và khử trùng sự kiện thanh toán (`PaymentEvent`). |
-| RK-03 | **Mất đồng bộ trạng thái khi cổng thanh toán phản hồi chậm / timeout (`UNKNOWN`).** | Trung bình / Cao | Tách biệt trạng thái `Payment` (`PENDING`, `SUCCESS`, `FAILED`, `UNKNOWN`) với `Order`; khóa tạo lượt thanh toán mới khi đang `UNKNOWN` cho đến khi truy vấn đối soát xong; đơn quá hạn 10 phút tự giải phóng giữ chỗ nếu chưa thanh toán. |
-| RK-04 | **Sai lệch quyền hạn hoặc truy cập chéo đơn hàng của người dùng khác (IDOR).** | Trung bình / Cao | Xác thực JWT qua HttpOnly Cookie, kiểm tra RBAC (`CUSTOMER`, `STAFF`, `ADMIN`) và kiểm tra quyền sở hữu (`userId`) tại tầng Backend API; tự thu hồi `AuthSession` khi khóa tài khoản hoặc đổi quyền. |
-| RK-05 | **Mâu thuẫn giữa SRS, sơ đồ UML và mã nguồn** qua hai Sprint phát triển. | Trung bình / Trung bình | Định danh duy nhất mọi yêu cầu (`FR-xx`, `NFR-xx`), quản lý thay đổi tài liệu qua Pull Request và kiểm tra chéo bằng `docs/traceability-matrix.md`. |
-| RK-06 | **Sự cố khi triển khai hoặc chạy migration trên môi trường Production.** | Thấp / Cao | Sử dụng `prisma migrate deploy` an toàn, kiểm tra `/api/health` và smoke test tự động sau deploy; giữ cơ chế rollback lại Docker image phiên bản trước khi deploy thất bại trước bước đổi schema. |
+| RK-01 | **Bán vượt tồn kho (Overselling)** khi nhiều khách hàng cùng đặt một `Size` sản phẩm sắp hết hàng tại cùng thời điểm. | Trung bình / Cao | Kiểm tra `available = onHand - reserved` và giữ chỗ (`OrderReservation`) trong giao dịch `Serializable` kết hợp kiểm soát phiên bản (`Size.version`). |
+| RK-02 | **Tạo đơn, thanh toán hoặc hoàn tiền trùng lặp** do mạng chậm khiến client gửi lại request hoặc callback lặp. | Cao / Cao | Bắt buộc sử dụng `Idempotency-Key` (`IdempotencyRecord` kèm băm payload) cho tạo đơn/thanh toán/hủy đơn và khử trùng sự kiện thanh toán (`PaymentEvent`). |
+| RK-03 | **Mất đồng bộ trạng thái khi cổng thanh toán phản hồi chậm / timeout (`UNKNOWN`).** | Trung bình / Cao | Tách trạng thái `Payment` với `Order`; chặn tạo lượt thanh toán mới hoặc hủy mù quáng khi đang `UNKNOWN` cho đến khi đối soát xong; đơn hết hạn 10 phút chỉ tự nhả giữ chỗ khi không có giao dịch chờ xác minh. |
+| RK-04 | **Sai lệch quyền hạn hoặc truy cập chéo đơn hàng của người dùng khác (IDOR).** | Trung bình / Cao | Xác thực JWT qua `HttpOnly` Cookie, kiểm tra RBAC (`CUSTOMER`, `STAFF`, `ADMIN`) và quyền sở hữu (`userId`) tại Backend API; tự thu hồi `AuthSession` khi khóa tài khoản hoặc đổi quyền. |
+| RK-05 | **Xung đột đồng thời khi khách hủy đơn `PAID` đúng lúc `STAFF` nhận pha chế (`PREPARING`) hoặc khách đã tiêu điểm tích lũy.** | Trung bình / Cao | Khóa dòng `Order` (`FOR UPDATE`) kèm kiểm tra `expectedVersion` để chỉ một thao tác thành công; kiểm tra số dư điểm khả dụng trước khi thu hồi `EARN_REVERSAL` nhằm tránh âm điểm. |
+| RK-06 | **Tấn công dò mã xác thực hoặc lỗi gửi thư từ dịch vụ ngoài `Gmail SMTP`.** | Trung bình / Trung bình | Lưu mã OTP dạng băm (`codeHash`), áp dụng TTL ngắn, giới hạn số lần nhập sai và tần suất gửi lại (`cooldown`/rate-limit), không ghi OTP hoặc SMTP secret ra log. |
+| RK-07 | **Mâu thuẫn giữa SRS, sơ đồ UML và mã nguồn** qua hai Sprint phát triển. | Trung bình / Trung bình | Định danh duy nhất mọi yêu cầu (`FR-xx`, `NFR-xx`), quản lý thay đổi tài liệu qua Pull Request và đối chiếu chéo trong `docs/traceability-matrix.md`. |
+| RK-08 | **Sự cố khi triển khai hoặc chạy migration trên môi trường Production.** | Thấp / Cao | Dùng `prisma migrate deploy` an toàn, kiểm tra `/api/health` và smoke test tự động sau deploy; hỗ trợ rollback lại Docker image trước đó nếu bước triển khai thất bại trước migration. |
